@@ -9,11 +9,13 @@ namespace UrlShortener.Server.Models.Entities;
 public class ShortenedUrl
 {
     [Column("id")]
+    [Key]
     public long Id { get; set; }
 
-    [ForeignKey("author_id")]
+    [Column("author_id")]
+    [ForeignKey("author")]
     [Required]
-    public User Author { get; set; }
+    public long AuthorId { get; set; }
 
     [Column("full_url")]
     [StringLength(2048)]
@@ -32,4 +34,6 @@ public class ShortenedUrl
     [Column("created_at")]
     [Required]
     public DateTime CreatedAt { get; set; }
+
+    public User Author { get; set; }
 }
