@@ -26,7 +26,6 @@ public class User
 
     [Column("email")]
     [StringLength(320)]
-    [EmailAddress]
     [Required]
     public string Email { get; set; }
 
