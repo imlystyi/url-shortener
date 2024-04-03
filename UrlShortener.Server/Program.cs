@@ -1,4 +1,7 @@
 
+using Microsoft.EntityFrameworkCore;
+using UrlShortener.Server.Contexts;
+
 namespace UrlShortener.Server
 {
     public class Program
@@ -13,6 +16,10 @@ namespace UrlShortener.Server
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            builder.Services.AddDbContext<UserContext>
+                    (options => options.UseSqlServer(builder.Configuration
+                                                            .GetConnectionString("Default")));
 
             var app = builder.Build();
 

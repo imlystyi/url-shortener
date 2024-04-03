@@ -1,6 +1,6 @@
 ﻿namespace UrlShortener.Server.Models;
 
-public enum Roles
+public enum Roles : byte
 {
     User,
     Admin
