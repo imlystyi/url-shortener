@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34525.116
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrlShortener.Server", "UrlShortener.Server\UrlShortener.Server.csproj", "{89748098-BF70-47C2-BE56-F17A8D6FE300}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "urlshortener.client", "urlshortener.client\urlshortener.client.esproj", "{8735304E-C626-47EA-9305-8C8DA87605ED}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A9CC801E-19DE-4465-BDCE-C0D264D4201B}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{89748098-BF70-47C2-BE56-F17A8D6FE300}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89748098-BF70-47C2-BE56-F17A8D6FE300}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89748098-BF70-47C2-BE56-F17A8D6FE300}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89748098-BF70-47C2-BE56-F17A8D6FE300}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8735304E-C626-47EA-9305-8C8DA87605ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8735304E-C626-47EA-9305-8C8DA87605ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8735304E-C626-47EA-9305-8C8DA87605ED}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{8735304E-C626-47EA-9305-8C8DA87605ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8735304E-C626-47EA-9305-8C8DA87605ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8735304E-C626-47EA-9305-8C8DA87605ED}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7B5011D2-A28E-4CDC-938A-0AA837DC17A2}
+	EndGlobalSection
+EndGlobal
