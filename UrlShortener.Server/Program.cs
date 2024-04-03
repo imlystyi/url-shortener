@@ -23,6 +23,9 @@ public class Program
         builder.Services.AddDbContext<ShortenedUrlContext>
                 (options => options.UseSqlServer(builder.Configuration
                                                         .GetConnectionString("Default")));
+        builder.Services.AddDbContext<SessionContext>
+                (options => options.UseSqlServer(builder.Configuration
+                                                        .GetConnectionString("Default")));
 
         WebApplication app = builder.Build();
 
