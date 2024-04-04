@@ -7,5 +7,7 @@ public class ShortenedUrlContext(DbContextOptions<ShortenedUrlContext> options) 
 {
     public DbSet<ShortenedUrl> ShortenedUrls { get; set; }
 
-    public bool HasShortUrl(string shortUrl) => this.ShortenedUrls.Any(su => su.ShortUrl == shortUrl);
+    public bool HasShortUrl(string shortUrl) => this.ShortenedUrls.Any(su => su.Code == shortUrl);
+
+    public List<ShortenedUrl> GetAll() => this.ShortenedUrls.ToList();
 }
