@@ -31,7 +31,10 @@ export class AuthService {
     });
   }
 
-  loginByUserIdentities(username: string, password: string): Promise<string> {
+  public loginByUserIdentities(
+    username: string,
+    password: string
+  ): Promise<string> {
     return new Promise<string>((resolve, reject) => {
       this.http
         .post<Session>(`${this.baseUrl}user/login`, {
@@ -56,7 +59,7 @@ export class AuthService {
     });
   }
 
-  loginBySessionIdentities(): Promise<boolean> {
+  public loginBySessionIdentities(): Promise<boolean> {
     let token: string = this.cookieService.get('ius-token'),
       userId = this.cookieService.get('ius-userId');
 
@@ -78,7 +81,7 @@ export class AuthService {
     });
   }
 
-  register(
+  public register(
     inputUsername: string,
     inputEmail: string,
     inputPassword: string

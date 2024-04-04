@@ -1,8 +1,8 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ShortenedUrlService, ShortenedUrlTableElement } from '../../services/shortened-url/shortened-url.service';
+import { ShortenedUrlService } from '../../services/shortened-url/shortened-url.service';
 import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
+import { ShortenedUrlTableModel } from '../../models/shortened-url.models';
 
 @Component({
   selector: 'app-table-view',
@@ -10,7 +10,9 @@ import { Router } from '@angular/router';
   styleUrl: './table-view.component.css',
 })
 export class TableViewComponent implements OnInit {
-  public shortenedUrls: ShortenedUrlTableElement[] = [];
+  public shortenedUrls: ShortenedUrlTableModel[] = [];
+  public fullUrl: string = '';
+
   private isUserRole: boolean = false;
   private isAdminRole: boolean = false;
 
@@ -20,7 +22,68 @@ export class TableViewComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit() {
+  //#region Methods
+
+  public isDeleteAndInfoButtonDisabled() {
+    return !this.isUserRole;
+  }
+
+  public isDeleteAllButtonDisabled() {
+    return !this.isAdminRole;
+  }
+
+  private getAll() {
+    this.shortenedUrlService
+      .getAll()
+      .then((result: ShortenedUrlTableModel[]) => {
+        this.shortenedUrls = result;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  //#endregion
+
+  //#region Triggers
+
+  public infoButtonClicked(shortenedUrl: ShortenedUrlTableModel) {
+    if (this.isUserRole) {
+      this.router.navigate(['/info', shortenedUrl.id]);
+    }
+  }
+
+  public deleteButtonClicked(shortenedUrl: ShortenedUrlTableModel) {
+    if (this.isUserRole) {
+      this.shortenedUrlService
+        .delete(shortenedUrl.id)
+        .then(() => {
+          this.getAll();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+      this.getAll();
+    }
+  }
+
+  public deleteAllButtonClicked() {
+    if (this.isUserRole) {
+      this.shortenedUrlService
+        .deleteAll()
+        .then(() => {
+          this.getAll();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+      this.getAll();
+    }
+  }
+
+  public ngOnInit() {
     this.getAll();
 
     this.authService
@@ -34,54 +97,5 @@ export class TableViewComponent implements OnInit {
       });
   }
 
-  isDeleteAndInfoButtonDisabled() {
-    return !this.isUserRole;
-  }
-
-  isDeleteAllButtonDisabled() {
-    return !this.isAdminRole;
-  }
-
-  infoButtonClicked(shortenedUrl: ShortenedUrlTableElement) {
-    this.router.navigate(['/info', shortenedUrl.id]);
-  }
-
-  deleteButtonClicked(shortenedUrl: ShortenedUrlTableElement) {
-    this.shortenedUrlService
-      .delete(shortenedUrl.id)
-      .then(() => {
-        this.getAll();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-      this.getAll();
-  }
-
-  deleteAllButtonClicked() {
-    this.shortenedUrlService
-      .deleteAll()
-      .then(() => {
-        this.getAll();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-      this.getAll();
-  }
-
-  getAll() {
-    this.shortenedUrlService
-      .getAll()
-      .then((result: ShortenedUrlTableElement[]) => {
-        this.shortenedUrls = result;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
-  title = 'urlshortener.client';
+  //#endregion
 }

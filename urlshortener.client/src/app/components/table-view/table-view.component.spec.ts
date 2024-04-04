@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { TableViewComponent } from './table-view.component';
 
 describe('TableViewComponent', () => {
@@ -8,10 +7,9 @@ describe('TableViewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TableViewComponent]
-    })
-    .compileComponents();
-    
+      declarations: [TableViewComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(TableViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

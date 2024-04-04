@@ -18,7 +18,13 @@ import { InfoViewComponent } from './components/info-view/info-view.component';
     TableViewComponent,
     InfoViewComponent,
   ],
-  imports: [RouterModule, BrowserModule, HttpClientModule, AppRoutingModule, FormsModule],
+  imports: [
+    RouterModule,
+    BrowserModule,
+    HttpClientModule,
+    AppRoutingModule,
+    FormsModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

@@ -1,0 +1,22 @@
+:host {
+  width: 1280px;
+  padding: 2rem;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+table {
+  text-align: left;
+}
+
+tr {
+  margin-top: 2rem;
+  border-bottom: 1px solid black;
+}
+
+th,
+td {
+  padding-top: 0.3rem;
+  padding-bottom: 0.3rem;
+}

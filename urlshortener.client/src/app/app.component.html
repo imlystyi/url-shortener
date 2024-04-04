@@ -1,19 +1,14 @@
-﻿<router-outlet></router-outlet>
-
-<nav class="navbar navbar-expand navbar-dark bg-light">
-  <div class="navbar-nav">
-      <a class="nav-item nav-link text-dark" routerLink="/">Home</a>
-      <a class="nav-item nav-link text-dark" routerLink="/login">Sign in</a>
-      <a class="nav-item nav-link text-dark" routerLink="/register">Sign up</a>
-  </div>
-</nav>
+﻿<div class="topnav">
+  <a routerLink="/">Table View</a>
+  <a routerLink="/login">Sign in</a>
+</div>
 
 <div class="jumbotron">
   <div class="container">
-      <div class="row">
-          <div class="col-sm-8 offset-sm-2">
-              <router-outlet></router-outlet>
-          </div>
+    <div class="row">
+      <div class="col-sm-8 offset-sm-2">
+        <router-outlet></router-outlet>
       </div>
+    </div>
   </div>
 </div>

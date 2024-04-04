@@ -1,11 +1,8 @@
-<h1 id="tableLabel">Shortened URL Table</h1>
-<br />
-
 <p *ngIf="!shortenedUrls"><em>Loading...</em></p>
 
-<div class="text-center">
+<div class="button-container">
   <button
-    class="btn btn-dark text-center w-25"
+    class="btn btn-dark w-25"
     (click)="deleteAllButtonClicked()"
     [disabled]="isDeleteAllButtonDisabled()"
   >
@@ -39,12 +36,12 @@
       </td>
       <td>
         <button
-        class="btn btn-light"
-        [disabled]="isDeleteAndInfoButtonDisabled()"
-        (click)="infoButtonClicked(shortenedUrl)"
-      >
-        Info
-      </button>
+          class="btn btn-light"
+          [disabled]="isDeleteAndInfoButtonDisabled()"
+          (click)="infoButtonClicked(shortenedUrl)"
+        >
+          Info
+        </button>
       </td>
     </tr>
   </tbody>

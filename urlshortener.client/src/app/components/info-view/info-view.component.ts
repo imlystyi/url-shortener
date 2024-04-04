@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {
-  ShortenedUrlService,
-} from '../../services/shortened-url/shortened-url.service';
+import { ShortenedUrlService } from '../../services/shortened-url/shortened-url.service';
 import { ShortenedUrlInfoModel } from '../../models/shortened-url.models';
 
 @Component({
@@ -24,11 +22,9 @@ export class InfoViewComponent {
     if (paramId != null) this.id = +paramId;
   }
 
-  ngOnInit() {
-    this.getInfo();
-  }
+  //#region Methods
 
-  public getInfo() {
+  private getInfo() {
     this.shortenedUrlService
       .get(this.id)
       .then((result: ShortenedUrlInfoModel) => {
@@ -38,4 +34,14 @@ export class InfoViewComponent {
         console.log(error);
       });
   }
+
+  //#endregion
+
+  //#region Triggers
+
+  public ngOnInit() {
+    this.getInfo();
+  }
+
+  //#endregion
 }

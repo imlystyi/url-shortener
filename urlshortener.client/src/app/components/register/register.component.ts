@@ -4,15 +4,19 @@ import { AuthService } from '../../services/auth/auth.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
+  styleUrl: './register.component.css',
 })
 export class RegisterComponent {
-  username: string = '';
-  password: string = '';
-  email: string = '';
-  errorOutput: string = '';
+  public username: string = '';
+  public password: string = '';
+  public email: string = '';
+  public errorOutput: string = '';
+
   constructor(private authService: AuthService) {}
 
-  submit() {
+  //#region Triggers
+
+  public submitButtonClicked() {
     this.authService
       .register(this.username, this.password, this.email)
       .then(() => {
@@ -20,4 +24,6 @@ export class RegisterComponent {
       })
       .catch((errorMessage: string) => (this.errorOutput = errorMessage));
   }
+
+  //#endregion
 }

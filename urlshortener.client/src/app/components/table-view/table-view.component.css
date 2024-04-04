@@ -1,22 +1,27 @@
 :host {
-    max-width: 1280px;
-    padding: 2rem;
-    text-align: center;
+  width: 1280px;
+  padding: 2rem;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
 }
 
 tr:nth-child(even) {
-    background: #F2F2F2;
+  margin-top: 2rem;
+  border-bottom: 1px solid black;
+}
+
+.button-container {
+  text-align: left;
 }
 
 tr:nth-child(odd) {
-    background: #FFF;
+  margin-top: 2rem;
+  border-bottom: 1px solid black;
 }
 
-th, td {
-    padding-left: 1rem;
-    padding-right: 1rem;
-}
-
-table {
-    margin: 0 auto;
+th,
+td {
+  padding-top: 0.3rem;
+  padding-bottom: 0.3rem;
 }

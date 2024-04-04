@@ -3,7 +3,7 @@
 </div>
 <br />
 
-<div class="mx-auto w-25">
+<div class="mx-auto w-50">
   <div class="form-group">
     <label for="inputUsername">Username</label>
     <input
@@ -34,7 +34,7 @@
       placeholder="Enter password"
     /><br />
   </div>
-  <button type="submit" (click)="submit()" class="btn btn-primary">
+  <button type="submit" (click)="submitButtonClicked()" class="btn btn-primary">
     Submit</button
   ><br /><br />
   <h6 *ngIf="errorOutput">{{ errorOutput }}</h6>

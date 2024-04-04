@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
-import { ShortenedUrlInfoModel, ShortenedUrlTableModel } from '../../models/shortened-url.models';
+import {
+  ShortenedUrlInfoModel,
+  ShortenedUrlTableModel,
+} from '../../models/shortened-url.models';
 
 @Injectable({
   providedIn: 'root',
