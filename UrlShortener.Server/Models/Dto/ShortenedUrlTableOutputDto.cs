@@ -9,7 +9,7 @@ public class ShortenedUrlTableOutputDto
     public string FullUrl { get; set; }
 
     public string ShortUrl { get; set; }
-
+    
     public static explicit operator ShortenedUrlTableOutputDto(ShortenedUrl v) => new()
     {
             Id = v.Id,
