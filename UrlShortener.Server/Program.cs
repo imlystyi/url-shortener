@@ -27,6 +27,16 @@ public class Program
                 (options => options.UseSqlServer(builder.Configuration
                                                         .GetConnectionString("Default")));
 
+        builder.Services.AddCors(options =>
+        {
+            options.AddDefaultPolicy(corsBuilder =>
+            {
+                corsBuilder.AllowAnyOrigin()
+                           .AllowAnyHeader()
+                           .AllowAnyMethod();
+            });
+        });
+
         WebApplication app = builder.Build();
 
         app.UseDefaultFiles();
@@ -47,6 +57,8 @@ public class Program
         app.MapControllers();
 
         app.MapFallbackToFile("/index.html");
+
+        app.UseCors();
 
         app.Run();
     }
