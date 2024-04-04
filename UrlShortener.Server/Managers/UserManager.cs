@@ -8,10 +8,9 @@ namespace UrlShortener.Server.Managers;
 
 public class UserManager(UserContext userContext, SessionContext sessionContext)
 {
-    public Roles CheckAccess(string username)
+    public Roles CheckAccess(long id)
     {
-        User user = userContext.Users.FirstOrDefault(u => u.Username == username)
-                    ?? throw new NoRoleException();
+        User user = userContext.Users.Find(id) ?? throw new NoRoleException();
 
         return user.Role;
     }

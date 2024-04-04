@@ -29,8 +29,10 @@ public class UserControllerTests
         };
 
         _ = userController.Register(userRegisterDto1);
-        ActionResult<Roles> actionResult2 = userController.CheckAccess(userRegisterDto1.Username);
-        ActionResult<Roles> actionResult3 = userController.CheckAccess("invalid");
+
+        long id2 = userContext.Users.First(u => u.Username == userRegisterDto1.Username).Id;
+        ActionResult<Roles> actionResult2 = userController.CheckAccess(id2);
+
         Assert.Multiple(() =>
         {
             Assert.That(actionResult2.Result, Is.TypeOf<OkObjectResult>());

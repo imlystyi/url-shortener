@@ -13,12 +13,12 @@ public class UserController(UserContext userContext, SessionContext sessionConte
 {
     private readonly UserManager _userManager = new(userContext, sessionContext);
 
-    [HttpGet("check-access/{username}")]
-    public ActionResult<Roles> CheckAccess([FromRoute] string username)
+    [HttpGet("check-access/{id}")]
+    public ActionResult<Roles> CheckAccess([FromRoute] long id)
     {
         try
         {
-            Roles role = _userManager.CheckAccess(username);
+            Roles role = _userManager.CheckAccess(id);
 
             return this.Ok(role);
         }
