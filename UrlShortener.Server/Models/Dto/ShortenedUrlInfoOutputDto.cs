@@ -12,5 +12,5 @@ public class ShortenedUrlInfoOutputDto
 
     public long Clicks { get; set; }
 
-    public DateTime CreatedAt { get; set; }
+    public string CreatedAt { get; set; }
 }

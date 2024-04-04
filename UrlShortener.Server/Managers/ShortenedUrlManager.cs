@@ -37,7 +37,7 @@ public class ShortenedUrlManager(ShortenedUrlContext shortenedUrlContext)
                 FullUrl = shortenedUrl.FullUrl,
                 ShortUrl = "https://localhost:7190/" + shortenedUrl.Code,
                 Clicks = shortenedUrl.Clicks,
-                CreatedAt = shortenedUrl.CreatedAt
+                CreatedAt = shortenedUrl.CreatedAt.ToString("g")
         };
     }
 
