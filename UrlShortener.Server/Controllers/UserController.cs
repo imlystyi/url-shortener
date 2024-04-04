@@ -9,12 +9,9 @@ namespace UrlShortener.Server.Controllers;
 
 [ApiController]
 [Route("api/user")]
-public class UserController : Controller
+public class UserController(UserContext userContext, SessionContext sessionContext) : Controller
 {
-    private readonly UserManager _userManager;
-
-    public UserController(UserContext userContext, SessionContext sessionContext) =>
-            _userManager = new(userContext, sessionContext);
+    private readonly UserManager _userManager = new(userContext, sessionContext);
 
     [HttpGet("check-access/{username}")]
     public ActionResult<Roles> CheckAccess([FromRoute] string username)
