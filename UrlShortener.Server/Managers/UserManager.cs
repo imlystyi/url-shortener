@@ -19,7 +19,7 @@ public class UserManager(UserContext userContext, SessionContext sessionContext)
     public SessionDto CreateUser(UserCreateDto userCreateDto)
     {
         if (_userContext.Users.Any(u => u.Username == userCreateDto.Username || u.Email == userCreateDto.Username))
-            throw new InvalidOperationException(); // todo: custom exception
+            throw new UserAlreadyExistsException();
 
         User createdUser = _userContext.Users.Add((User)userCreateDto).Entity;
         _userContext.SaveChanges();
