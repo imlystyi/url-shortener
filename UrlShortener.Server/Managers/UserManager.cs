@@ -17,6 +17,14 @@ public class UserManager(UserContext userContext, SessionContext sessionContext)
 
     #region Methods
 
+    public Roles CheckAccess(string username)
+    {
+        User user = _userContext.Users.FirstOrDefault(u => u.Username == username)
+                    ?? throw new NoRoleException();
+
+        return user.Role;
+    }
+
     public SessionDto CreateUser(UserRegisterDto userRegisterDto)
     {
         if (_userContext.Users.Any(u => u.Username == userRegisterDto.Username || u.Email == userRegisterDto.Username))
@@ -50,14 +58,6 @@ public class UserManager(UserContext userContext, SessionContext sessionContext)
 
         _sessionContext.Sessions.Update(session);
         _sessionContext.SaveChanges();
-    }
-
-    public Roles CheckAccess(string username)
-    {
-        User user = _userContext.Users.FirstOrDefault(u => u.Username == username)
-                    ?? throw new NoRoleException();
-
-        return user.Role;
     }
 
     private SessionDto CreateSession(long userId)

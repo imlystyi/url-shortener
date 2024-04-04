@@ -1,3 +1,3 @@
 ﻿namespace UrlShortener.Server.Exceptions;
 
-public class NoRoleException() : Exception("User with this id has no role");
+public class NoRoleException() : Exception("There is no role related to user with such id");
