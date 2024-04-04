@@ -24,9 +24,7 @@ export class ShortenedUrlService {
             resolve(result);
           }
         })
-        .catch(() => {
-          reject('Server error. Try again later');
-        })
+        .catch(() => reject('Server error. Try again later'))
     );
   }
 
@@ -40,9 +38,7 @@ export class ShortenedUrlService {
             resolve(result);
           }
         })
-        .catch(() => {
-          reject('Server error. Try again later');
-        })
+        .catch(() => reject('Server error. Try again later'))
     );
   }
 

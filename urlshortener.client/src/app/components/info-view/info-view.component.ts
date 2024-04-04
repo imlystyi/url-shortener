@@ -9,7 +9,7 @@ import { ShortenedUrlInfoModel } from '../../models/shortened-url.models';
   styleUrl: './info-view.component.css',
 })
 export class InfoViewComponent {
-  public shortenedUrl: ShortenedUrlInfoModel | null = null;
+  public model: ShortenedUrlInfoModel | null = null;
 
   private id: number = 0;
 
@@ -27,12 +27,8 @@ export class InfoViewComponent {
   private getInfo() {
     this.shortenedUrlService
       .get(this.id)
-      .then((result: ShortenedUrlInfoModel) => {
-        this.shortenedUrl = result;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      .then((result: ShortenedUrlInfoModel) => (this.model = result))
+      .catch((error) => console.log(error));
   }
 
   //#endregion

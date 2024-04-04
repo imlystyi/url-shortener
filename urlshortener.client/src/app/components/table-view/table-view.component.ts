@@ -10,11 +10,11 @@ import { ShortenedUrlTableModel } from '../../models/shortened-url.models';
   styleUrl: './table-view.component.css',
 })
 export class TableViewComponent implements OnInit {
-  public shortenedUrls: ShortenedUrlTableModel[] = [];
+  public models: ShortenedUrlTableModel[] = [];
   public fullUrl: string = '';
 
-  private isUserRole: boolean = false;
-  private isAdminRole: boolean = false;
+  private hasUserRole: boolean = false;
+  private hasAdminRole: boolean = false;
 
   constructor(
     private shortenedUrlService: ShortenedUrlService,
@@ -25,18 +25,18 @@ export class TableViewComponent implements OnInit {
   //#region Methods
 
   public isDeleteAndInfoButtonDisabled() {
-    return !this.isUserRole;
+    return !this.hasUserRole;
   }
 
   public isDeleteAllButtonDisabled() {
-    return !this.isAdminRole;
+    return !this.hasAdminRole;
   }
 
   private getAll() {
     this.shortenedUrlService
       .getAll()
       .then((result: ShortenedUrlTableModel[]) => {
-        this.shortenedUrls = result;
+        this.models = result;
       })
       .catch((error) => {
         console.log(error);
@@ -47,34 +47,28 @@ export class TableViewComponent implements OnInit {
 
   //#region Triggers
 
-  public infoButtonClicked(shortenedUrl: ShortenedUrlTableModel) {
-    if (this.isUserRole) {
-      this.router.navigate(['/info', shortenedUrl.id]);
+  public infoButtonClicked(model: ShortenedUrlTableModel) {
+    if (this.hasUserRole) {
+      this.router.navigate(['/info', model.id]);
     }
   }
 
-  public deleteButtonClicked(shortenedUrl: ShortenedUrlTableModel) {
-    if (this.isUserRole) {
+  public deleteButtonClicked(model: ShortenedUrlTableModel) {
+    if (this.hasUserRole) {
       this.shortenedUrlService
-        .delete(shortenedUrl.id)
-        .then(() => {
-          this.getAll();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+        .delete(model.id)
+        .then(() => this.getAll())
+        .catch((error) => console.log(error));
 
       this.getAll();
     }
   }
 
   public deleteAllButtonClicked() {
-    if (this.isUserRole) {
+    if (this.hasUserRole) {
       this.shortenedUrlService
         .deleteAll()
-        .then(() => {
-          this.getAll();
-        })
+        .then(() => this.getAll())
         .catch((error) => {
           console.log(error);
         });
@@ -89,11 +83,12 @@ export class TableViewComponent implements OnInit {
     this.authService
       .checkPermission()
       .then((result: number) => {
-        this.isUserRole = result === 1 || result === 2;
-        this.isAdminRole = result === 2;
+        this.hasUserRole = result === 1 || result === 2;
+        this.hasAdminRole = result === 2;
       })
-      .catch(() => {
-        this.isUserRole = false;
+      .catch((error) => {
+        this.hasUserRole = false;
+        console.log(error);
       });
   }
 

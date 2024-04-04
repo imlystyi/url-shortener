@@ -1,4 +1,4 @@
-<p *ngIf="!shortenedUrls"><em>Loading...</em></p>
+<p *ngIf="!models"><em>Loading...</em></p>
 
 <div class="button-container">
   <button
@@ -11,7 +11,7 @@
 </div>
 <br />
 
-<table *ngIf="shortenedUrls" class="w-100">
+<table *ngIf="models" class="w-100">
   <thead>
     <tr>
       <th>Id</th>
@@ -21,15 +21,15 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let shortenedUrl of shortenedUrls">
-      <td>{{ shortenedUrl.id }}</td>
-      <td>{{ shortenedUrl.shortUrl }}</td>
-      <td>{{ shortenedUrl.fullUrl }}</td>
+    <tr *ngFor="let model of models">
+      <td>{{ model.id }}</td>
+      <td>{{ model.shortUrl }}</td>
+      <td>{{ model.fullUrl }}</td>
       <td>
         <button
           class="btn btn-light"
           [disabled]="isDeleteAndInfoButtonDisabled()"
-          (click)="deleteButtonClicked(shortenedUrl)"
+          (click)="deleteButtonClicked(model)"
         >
           Delete
         </button>
@@ -38,7 +38,7 @@
         <button
           class="btn btn-light"
           [disabled]="isDeleteAndInfoButtonDisabled()"
-          (click)="infoButtonClicked(shortenedUrl)"
+          (click)="infoButtonClicked(model)"
         >
           Info
         </button>

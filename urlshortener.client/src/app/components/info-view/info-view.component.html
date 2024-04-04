@@ -1,34 +1,34 @@
 <h1 id="tableLabel">Shortened URL Info</h1>
 <br />
 
-<table *ngIf="shortenedUrl" class="w-100">
+<table *ngIf="model" class="w-100">
   <tr>
     <th>Id</th>
-    <td class="w-800">{{ shortenedUrl.id }}</td>
+    <td class="w-800">{{ model.id }}</td>
   </tr>
   <br />
   <tr>
     <th>Author Nickname</th>
-    <td>{{ shortenedUrl.authorNickname }}</td>
+    <td>{{ model.authorNickname }}</td>
   </tr>
   <br />
   <tr>
     <th>Full URL</th>
-    <td>{{ shortenedUrl.fullUrl }}</td>
+    <td>{{ model.fullUrl }}</td>
   </tr>
   <br />
   <tr>
     <th>Short URL</th>
-    <td>{{ shortenedUrl.shortUrl }}</td>
+    <td>{{ model.shortUrl }}</td>
   </tr>
   <br />
   <tr>
     <th>Clicks</th>
-    <td>{{ shortenedUrl.clicks }}</td>
+    <td>{{ model.clicks }}</td>
   </tr>
   <br />
   <tr>
     <th>Created At</th>
-    <td>{{ shortenedUrl.createdAt }}</td>
+    <td>{{ model.createdAt }}</td>
   </tr>
 </table>

@@ -19,15 +19,10 @@ export class AuthService {
         .get<number>(`${this.baseUrl}user/check-access/${id}`)
         .toPromise()
         .then((result: number | undefined) => {
-          if (result) {
-            resolve(+result);
-          } else {
-            reject(-1);
-          }
+          if (result) resolve(+result);
+          else reject(-1);
         })
-        .catch(() => {
-          reject(-1);
-        });
+        .catch(() => reject(-1));
     });
   }
 
@@ -50,11 +45,8 @@ export class AuthService {
           }
         })
         .catch((error: HttpErrorResponse) => {
-          if (error.status === 401) {
-            reject('Invalid username and/or password');
-          } else {
-            reject('Server error. Try again later');
-          }
+          if (error.status === 401) reject('Invalid username and/or password');
+          else reject('Server error. Try again later');
         });
     });
   }
@@ -71,13 +63,9 @@ export class AuthService {
         })
         .toPromise()
         .then((result: Session | undefined) => {
-          if (result) {
-            resolve(true);
-          }
+          if (result) resolve(true);
         })
-        .catch(() => {
-          reject(false);
-        });
+        .catch(() => reject(false));
     });
   }
 
@@ -104,15 +92,12 @@ export class AuthService {
           }
         })
         .catch((error: HttpErrorResponse) => {
-          if (error.status === 409) {
+          if (error.status === 409)
             reject(
               'User with the same email address or username already exists'
             );
-          } else if (error.status === 400) {
-            reject('Invalid data');
-          } else {
-            reject('Server error. Try again later');
-          }
+          else if (error.status === 400) reject('Invalid data');
+          else reject('Server error. Try again later');
         });
     });
   }

@@ -18,10 +18,11 @@ export class LoginComponent {
   public submitButtonClicked() {
     this.authService
       .loginByUserIdentities(this.username, this.password)
-      .then(() => {
-        window.location.href = '/';
-      })
-      .catch((errorMessage: string) => (this.errorOutput = errorMessage));
+      .then(() => window.location.href = '/')
+      .catch((errorMessage: string) => {
+        this.errorOutput = errorMessage;
+        console.log(errorMessage);
+      });
   }
 
   //#endregion

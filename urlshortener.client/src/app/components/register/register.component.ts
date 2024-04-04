@@ -19,10 +19,11 @@ export class RegisterComponent {
   public submitButtonClicked() {
     this.authService
       .register(this.username, this.password, this.email)
-      .then(() => {
-        window.location.href = '/';
-      })
-      .catch((errorMessage: string) => (this.errorOutput = errorMessage));
+      .then(() => (window.location.href = '/'))
+      .catch((errorMessage: string) => {
+        this.errorOutput = errorMessage;
+        console.log(errorMessage);
+      });
   }
 
   //#endregion
