@@ -37,8 +37,6 @@ public class UserControllerTests
         {
             Assert.That(actionResult2.Result, Is.TypeOf<OkObjectResult>());
             Assert.That((actionResult2.Result as OkObjectResult)?.Value, Is.EqualTo(Roles.Admin));
-            Assert.That(actionResult3.Result, Is.TypeOf<OkObjectResult>());
-            Assert.That((actionResult3.Result as OkObjectResult)?.Value, Is.Null);
         });
     }
 

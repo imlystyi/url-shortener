@@ -24,7 +24,7 @@ public class UserController(UserContext userContext, SessionContext sessionConte
         }
         catch (NoRoleException)
         {
-            return this.Ok(null);
+            return this.Unauthorized();
         }
         catch (Exception)
         {
