@@ -1,1 +1,41 @@
-<p>register works!</p>
+<div class="panel-heading">
+  <h3 class="pt-3 font-weight-bold">Sign up</h3>
+</div>
+<br />
+
+<div class="mx-auto w-25">
+  <div class="form-group">
+    <label for="inputUsername">Username</label>
+    <input
+      type="text"
+      [(ngModel)]="username"
+      class="form-control"
+      id="inputUsername"
+      placeholder="Enter username"
+    /><br />
+  </div>
+  <div class="form-group">
+    <label for="inputPassword">Password</label>
+    <input
+      type="password"
+      [(ngModel)]="password"
+      class="form-control"
+      id="inputPassword"
+      placeholder="Enter password"
+    /><br />
+  </div>
+  <div class="form-group">
+    <label for="inputEmail">Email</label>
+    <input
+      type="email"
+      [(ngModel)]="email"
+      class="form-control"
+      id="inputEmail"
+      placeholder="Enter password"
+    /><br />
+  </div>
+  <button type="submit" (click)="submit()" class="btn btn-primary">
+    Submit</button
+  ><br /><br />
+  <h6 *ngIf="errorOutput">{{ errorOutput }}</h6>
+</div>

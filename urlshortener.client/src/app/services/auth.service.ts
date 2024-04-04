@@ -1,8 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
 
 interface Session {
   token: string;
@@ -58,11 +56,43 @@ export class AuthService {
             resolve(true);
           }
         })
+        .catch(() => {
+          reject(false);
+        });
+    });
+  }
+
+  register(
+    inputUsername: string,
+    inputEmail: string,
+    inputPassword: string
+  ): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
+      this.http
+        .post<Session>(`${this.baseUrl}user/register`, {
+          role: 0,
+          username: inputUsername,
+          password: inputEmail,
+          email: inputPassword,
+        })
+        .toPromise()
+        .then((result: Session | undefined) => {
+          if (result) {
+            this.cookieService.set('ius-token', result.token);
+            this.cookieService.set('ius-userId', result.userId);
+
+            resolve('');
+          }
+        })
         .catch((error: HttpErrorResponse) => {
-          if (error.status === 401) {
-            reject(false);
+          if (error.status === 409) {
+            reject(
+              'User with the same email address or username already exists'
+            );
+          } else if (error.status === 400) {
+            reject('Invalid data');
           } else {
-            reject(false);
+            reject('Server error. Try again later');
           }
         });
     });
