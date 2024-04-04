@@ -9,8 +9,6 @@ namespace UrlShortener.Server.Tests.ControllerTests;
 
 public class UserControllerTests
 {
-    #region Tests
-
     [Test]
     public void CheckAccessTest()
     {
@@ -143,6 +141,4 @@ public class UserControllerTests
         ActionResult actionResult3 = userController.LoginBySessionIdentities(sessionDto2);
         Assert.That(actionResult3, Is.TypeOf<OkResult>());
     }
-
-    #endregion
 }
