@@ -3,9 +3,10 @@ using UrlShortener.Server.Models.Entities;
 
 namespace UrlShortener.Server.Models.Dto;
 
-public class UserCreateDto
+public class UserRegisterDto
 {
-    public required byte Role { get; set; }
+    [EnumDataType(typeof(Roles))]
+    public required Roles Role { get; set; }
 
     [StringLength(32)]
     public required string Username { get; set; }
@@ -17,11 +18,11 @@ public class UserCreateDto
     [EmailAddress]
     public required string Email { get; set; }
 
-    public static explicit operator User(UserCreateDto v)
+    public static explicit operator User(UserRegisterDto v)
     {
         return new()
         {
-            Role = (Roles)v.Role,
+            Role = v.Role,
             Username = v.Username,
             Password = v.Password,
             Email = v.Email,
