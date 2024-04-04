@@ -1,11 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using UrlShortener.Server.Models.Dto;
 
 namespace UrlShortener.Server.Models.Entities;
 
 [Table("shortened_url")]
-[Index(nameof(ShortUrl), IsUnique = true)]
+[Index(nameof(Code), IsUnique = true)]
 public class ShortenedUrl
 {
     [Column("id")]
@@ -22,10 +23,10 @@ public class ShortenedUrl
     [Required]
     public string FullUrl { get; set; }
 
-    [Column("short_url")]
+    [Column("code")]
     [StringLength(32)]
     [Required]
-    public string ShortUrl { get; set; }
+    public string Code { get; set; }
 
     [Column("clicks")]
     [Required]

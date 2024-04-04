@@ -1,5 +1,7 @@
 ﻿using System.Text;
+using Microsoft.EntityFrameworkCore;
 using UrlShortener.Server.Contexts;
+using UrlShortener.Server.Exceptions;
 using UrlShortener.Server.Models.Dto;
 using UrlShortener.Server.Models.Entities;
 
@@ -12,61 +14,85 @@ public class ShortenedUrlManager(ShortenedUrlContext shortenedUrlContext)
     private const int _ShortenUrlLength = 5,
                       _MaxAttempts = 100;
 
-    private const string _Alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
-                         _ShortUrlPrefix = "https://localhost:5001/";
-
-    private readonly ShortenedUrlContext _shortenedUrlContext = shortenedUrlContext;
+    private const string _Alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
     #endregion
 
     #region Methods
 
-    public ShortenedUrlCreateDto ShortenUrl(string fullUrl, long authorId)
+    public IEnumerable<ShortenedUrlTableOutputDto> GetShortenedUrlList()
     {
-        if (_shortenedUrlContext.ShortenedUrls.Any(su => su.FullUrl == fullUrl))
-            throw new InvalidOperationException("This URL has already been shortened."); // todo: custom exception
+        return shortenedUrlContext.GetAll().Select(su => (ShortenedUrlTableOutputDto)su);
+    }
+
+    public ShortenedUrlInfoOutputDto GetShortenedUrlInfo(long id)
+    {
+        ShortenedUrl shortenedUrl = shortenedUrlContext.ShortenedUrls.Include(su => su.Author)
+                                                       .FirstOrDefault(su => su.Id == id)
+                                    ?? throw new ShortenedUrlNotFound();
+
+        return new()
+        {
+                AuthorNickname = shortenedUrl.Author.Username,
+                FullUrl = shortenedUrl.FullUrl,
+                ShortUrl = "https://localhost:7190/" + shortenedUrl.Code,
+                Clicks = shortenedUrl.Clicks,
+                CreatedAt = shortenedUrl.CreatedAt
+        };
+    }
+
+    public string GetFullUrl(string shortUrl)
+    {
+        ShortenedUrl shortenedUrl = shortenedUrlContext.ShortenedUrls.FirstOrDefault(su => su.Code == shortUrl)
+                                    ?? throw new ShortenedUrlNotFound();
+
+        shortenedUrl.Clicks++;
+        shortenedUrlContext.SaveChanges();
+
+        return shortenedUrl.FullUrl;
+    }
+
+    public void AddShortenedUrl(ShortenedUrlInputDto shortenedUrlDto)
+    {
+        if (shortenedUrlContext.ShortenedUrls.Any(su => su.FullUrl == shortenedUrlDto.FullUrl))
+            throw new FullUrlAlreadyShortenedException();
 
         for (int i = 0; i <= _MaxAttempts; i++)
         {
-            string shortUrl = _ShortUrlPrefix + this.GenerateRandomCode();
+            string shortUrl = this.GenerateRandomCode();
 
-            if (!_shortenedUrlContext.HasShortUrl(shortUrl))
-                return new()
-                {
-                        AuthorId = authorId,
-                        FullUrl = fullUrl,
-                        ShortUrl = shortUrl
-                };
+            if (shortenedUrlContext.HasShortUrl(shortUrl))
+                continue;
+
+            ShortenedUrl shortenedUrl = new()
+            {
+                    FullUrl = shortenedUrlDto.FullUrl,
+                    Code = shortUrl,
+                    AuthorId = shortenedUrlDto.AuthorId,
+                    Clicks = 0,
+                    CreatedAt = DateTime.Now
+            };
+
+            shortenedUrlContext.ShortenedUrls.Add(shortenedUrl);
+            shortenedUrlContext.SaveChanges();
+
+            return;
         }
 
-        throw new InvalidOperationException
-                ("Failed to generate a unique short URL. Try again later."); // todo: custom exception
-    }
-
-    public void AddShortenedUrl(ShortenedUrlCreateDto shortenedUrlDto)
-    {
-        _shortenedUrlContext.ShortenedUrls.Add((ShortenedUrl)shortenedUrlDto);
-        _shortenedUrlContext.SaveChanges();
-    }
-
-    public void UpdateShortenedUrl(ShortenedUrlUpdateDto shortenedUrlDto)
-    {
-        ShortenedUrl shortenedUrl = _shortenedUrlContext.ShortenedUrls.Find(shortenedUrlDto.Id)
-                                    ?? throw new
-                                            InvalidOperationException("Shortened URL not found."); // todo: custom exception
-
-        shortenedUrl.FullUrl = shortenedUrlDto.FullUrl;
-        shortenedUrl.ShortUrl = shortenedUrlDto.ShortUrl;
-
-        _shortenedUrlContext.ShortenedUrls.Update(shortenedUrl);
-        _shortenedUrlContext.SaveChanges();
+        throw new MaxAttemptsReachedException();
     }
 
     public void DeleteShortenedUrl(long id)
     {
-        _shortenedUrlContext.ShortenedUrls.Remove
-                (_shortenedUrlContext.ShortenedUrls.Find(id) ??
-                 throw new InvalidOperationException("Shortened URL not found.")); // todo: custom exception
+        shortenedUrlContext.ShortenedUrls.Remove
+                (shortenedUrlContext.ShortenedUrls.Find(id) ?? throw new ShortenedUrlNotFound());
+        shortenedUrlContext.SaveChanges();
+    }
+
+    public void DeleteAllShortenedUrls()
+    {
+        shortenedUrlContext.Database.ExecuteSqlRaw("DELETE FROM shortened_url");
+        shortenedUrlContext.SaveChanges();
     }
 
     private string GenerateRandomCode()
