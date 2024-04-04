@@ -1,21 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
-
-export interface ShortenedUrlTableElement {
-  id: number;
-  fullUrl: string;
-  shortUrl: string;
-}
-
-export interface ShortenedUrlInfoElement {
-  id: string;
-  authorNickname: string;
-  fullUrl: string;
-  shortUrl: string;
-  clicks: number;
-  createdAt: string;
-}
+import { ShortenedUrlInfoModel, ShortenedUrlTableModel } from '../../models/shortened-url.models';
 
 @Injectable({
   providedIn: 'root',
@@ -25,12 +11,12 @@ export class ShortenedUrlService {
 
   constructor(private http: HttpClient, private cookieService: CookieService) {}
 
-  getAll(): Promise<ShortenedUrlTableElement[]> {
-    return new Promise<ShortenedUrlTableElement[]>((resolve, reject) =>
+  getAll(): Promise<ShortenedUrlTableModel[]> {
+    return new Promise<ShortenedUrlTableModel[]>((resolve, reject) =>
       this.http
-        .get<ShortenedUrlTableElement[]>(`${this.baseUrl}get-all`)
+        .get<ShortenedUrlTableModel[]>(`${this.baseUrl}get-all`)
         .toPromise()
-        .then((result: ShortenedUrlTableElement[] | undefined) => {
+        .then((result: ShortenedUrlTableModel[] | undefined) => {
           if (result) {
             resolve(result);
           }
@@ -41,12 +27,12 @@ export class ShortenedUrlService {
     );
   }
 
-  get(id: number): Promise<ShortenedUrlInfoElement> {
-    return new Promise<ShortenedUrlInfoElement>((resolve, reject) =>
+  get(id: number): Promise<ShortenedUrlInfoModel> {
+    return new Promise<ShortenedUrlInfoModel>((resolve, reject) =>
       this.http
-        .get<ShortenedUrlInfoElement>(`${this.baseUrl}get-info/${id}`)
+        .get<ShortenedUrlInfoModel>(`${this.baseUrl}get-info/${id}`)
         .toPromise()
-        .then((result: ShortenedUrlInfoElement | undefined) => {
+        .then((result: ShortenedUrlInfoModel | undefined) => {
           if (result) {
             resolve(result);
           }

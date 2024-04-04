@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ShortenedUrlService, ShortenedUrlTableElement } from '../../services/shortened-url.service';
-import { AuthService } from '../../services/auth.service';
+import { ShortenedUrlService, ShortenedUrlTableElement } from '../../services/shortened-url/shortened-url.service';
+import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
 
 @Component({

@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
   ShortenedUrlService,
-  ShortenedUrlInfoElement,
-} from '../../services/shortened-url.service';
+} from '../../services/shortened-url/shortened-url.service';
+import { ShortenedUrlInfoModel } from '../../models/shortened-url.models';
 
 @Component({
   selector: 'app-info-view',
@@ -11,7 +11,7 @@ import {
   styleUrl: './info-view.component.css',
 })
 export class InfoViewComponent {
-  public shortenedUrl: ShortenedUrlInfoElement | null = null;
+  public shortenedUrl: ShortenedUrlInfoModel | null = null;
 
   private id: number = 0;
 
@@ -31,7 +31,7 @@ export class InfoViewComponent {
   public getInfo() {
     this.shortenedUrlService
       .get(this.id)
-      .then((result: ShortenedUrlInfoElement) => {
+      .then((result: ShortenedUrlInfoModel) => {
         this.shortenedUrl = result;
       })
       .catch((error) => {

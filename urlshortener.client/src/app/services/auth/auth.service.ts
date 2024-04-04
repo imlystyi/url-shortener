@@ -1,11 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-
-export interface Session {
-  token: string;
-  userId: string;
-}
+import { Session } from '../../models/auth.models';
 
 @Injectable({
   providedIn: 'root',
