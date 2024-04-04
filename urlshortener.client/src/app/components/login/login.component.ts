@@ -10,7 +10,7 @@ export class LoginComponent {
   username: string = '';
   password: string = '';
   errorOutput: string = '';
-  constructor(private http: HttpClient, private authService: AuthService) {}
+  constructor(private authService: AuthService) {}
 
   submit() {
     this.authService
