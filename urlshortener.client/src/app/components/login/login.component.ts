@@ -16,7 +16,7 @@ export class LoginComponent {
     this.authService
       .loginByUserIdentities(this.username, this.password)
       .then(() => {
-        window.location.href = '/table-view';
+        window.location.href = '/';
       })
       .catch((errorMessage: string) => (this.errorOutput = errorMessage));
   }

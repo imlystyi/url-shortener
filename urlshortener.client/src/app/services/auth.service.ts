@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 
-interface Session {
+export interface Session {
   token: string;
   userId: string;
 }
@@ -14,6 +14,26 @@ export class AuthService {
   private baseUrl: string = 'https://localhost:7190/api/';
 
   constructor(private http: HttpClient, private cookieService: CookieService) {}
+
+  public checkPermission(): Promise<number> {
+    let id: number = +this.cookieService.get('ius-userId');
+
+    return new Promise<number>((resolve, reject) => {
+      this.http
+        .get<number>(`${this.baseUrl}user/check-access/${id}`)
+        .toPromise()
+        .then((result: number | undefined) => {
+          if (result) {
+            resolve(+result);
+          } else {
+            reject(-1);
+          }
+        })
+        .catch(() => {
+          reject(-1);
+        });
+    });
+  }
 
   loginByUserIdentities(username: string, password: string): Promise<string> {
     return new Promise<string>((resolve, reject) => {

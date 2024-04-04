@@ -1,0 +1,51 @@
+<h1 id="tableLabel">Shortened URL Table</h1>
+<br />
+
+<p *ngIf="!shortenedUrls"><em>Loading...</em></p>
+
+<div class="text-center">
+  <button
+    class="btn btn-dark text-center w-25"
+    (click)="deleteAllButtonClicked()"
+    [disabled]="isDeleteAllButtonDisabled()"
+  >
+    Delete all
+  </button>
+</div>
+<br />
+
+<table *ngIf="shortenedUrls" class="w-100">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Short URL</th>
+      <th>Full URL</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let shortenedUrl of shortenedUrls">
+      <td>{{ shortenedUrl.id }}</td>
+      <td>{{ shortenedUrl.shortUrl }}</td>
+      <td>{{ shortenedUrl.fullUrl }}</td>
+      <td>
+        <button
+          class="btn btn-light"
+          [disabled]="isDeleteAndInfoButtonDisabled()"
+          (click)="deleteButtonClicked(shortenedUrl)"
+        >
+          Delete
+        </button>
+      </td>
+      <td>
+        <button
+        class="btn btn-light"
+        [disabled]="isDeleteAndInfoButtonDisabled()"
+        (click)="infoButtonClicked(shortenedUrl)"
+      >
+        Info
+      </button>
+      </td>
+    </tr>
+  </tbody>
+</table>

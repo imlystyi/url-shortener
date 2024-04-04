@@ -16,7 +16,7 @@ export class RegisterComponent {
     this.authService
       .register(this.username, this.password, this.email)
       .then(() => {
-        window.location.href = 'table-view';
+        window.location.href = '/';
       })
       .catch((errorMessage: string) => (this.errorOutput = errorMessage));
   }
