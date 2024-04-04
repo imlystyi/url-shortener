@@ -36,7 +36,7 @@ public class ShortenedUrlController(ShortenedUrlContext shortenedUrlContext) : C
         }
     }
 
-    [HttpGet("api/get-all")]
+    [HttpGet("api/url/get-all")]
     public ActionResult<IEnumerable<ShortenedUrlTableOutputDto>> GetAll()
     {
         try
@@ -49,7 +49,7 @@ public class ShortenedUrlController(ShortenedUrlContext shortenedUrlContext) : C
         }
     }
 
-    [HttpGet("api/get-info/{id}")]
+    [HttpGet("api/url/get-info/{id}")]
     public ActionResult<ShortenedUrlInfoOutputDto> GetInfo([FromRoute] long id)
     {
         try
@@ -66,7 +66,7 @@ public class ShortenedUrlController(ShortenedUrlContext shortenedUrlContext) : C
         }
     }
 
-    [HttpPost("api/add")]
+    [HttpPost("api/url/add")]
     public ActionResult Add([FromBody] ShortenedUrlInputDto shortenedUrlDto)
     {
         try
@@ -85,7 +85,7 @@ public class ShortenedUrlController(ShortenedUrlContext shortenedUrlContext) : C
         }
     }
 
-    [HttpDelete("api/delete/{id}")]
+    [HttpDelete("api/url/delete/{id}")]
     public ActionResult Delete([FromRoute] long id)
     {
         try
@@ -104,7 +104,7 @@ public class ShortenedUrlController(ShortenedUrlContext shortenedUrlContext) : C
         }
     }
 
-    [HttpDelete("api/delete-all")]
+    [HttpDelete("api/url/delete-all")]
     public ActionResult DeleteAll()
     {
         try

@@ -10,7 +10,7 @@ import {
   providedIn: 'root',
 })
 export class ShortenedUrlService {
-  private baseUrl: string = 'https://localhost:7190/api/';
+  private baseUrl: string = 'https://localhost:7190/api/url/';
 
   constructor(private http: HttpClient, private cookieService: CookieService) {}
 
