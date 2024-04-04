@@ -1,0 +1,34 @@
+<h1 id="tableLabel">Shortened URL Info</h1>
+<br />
+
+<table *ngIf="shortenedUrl" class="w-900">
+  <tr>
+    <th>Id</th>
+    <td class="w-800">{{ shortenedUrl.id }}</td>
+  </tr>
+  <br />
+  <tr>
+    <th>Author Nickname</th>
+    <td>{{ shortenedUrl.authorNickname }}</td>
+  </tr>
+  <br />
+  <tr>
+    <th>Full URL</th>
+    <td>{{ shortenedUrl.fullUrl }}</td>
+  </tr>
+  <br />
+  <tr>
+    <th>Short URL</th>
+    <td>{{ shortenedUrl.shortUrl }}</td>
+  </tr>
+  <br />
+  <tr>
+    <th>Clicks</th>
+    <td>{{ shortenedUrl.clicks }}</td>
+  </tr>
+  <br />
+  <tr>
+    <th>Created At</th>
+    <td>{{ shortenedUrl.createdAt }}</td>
+  </tr>
+</table>
