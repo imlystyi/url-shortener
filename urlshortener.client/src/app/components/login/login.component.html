@@ -1,5 +1,20 @@
-﻿<router-outlet></router-outlet>
+<div class="panel-heading">
+    <h3 class="pt-3 font-weight-bold">Sign in</h3>
+</div>
+<h5>...or <a href="/register">sign up</a> if you do not have an account</h5><br/>
 
+<div class="mx-auto w-25">
+    <div class="form-group">
+        <label for="inputUsername">Username</label>
+        <input type="text" [(ngModel)]="username" class="form-control" id="inputUsername" placeholder="Enter username"><br/>
+      </div>
+    <div class="form-group">
+      <label for="inputPassword">Password</label>
+      <input type="password" [(ngModel)]="password" class="form-control" id="inputPassword" placeholder="Enter password"><br/>
+    </div>
+    <button type="submit" (click)="submit()" class="btn btn-primary">Submit</button><br/><br/>
+    <h6 *ngIf="errorOutput">{{errorOutput}}</h6>
+</div>
 
 <!-- <h1 id="tableLabel">Weather forecast</h1>
 
