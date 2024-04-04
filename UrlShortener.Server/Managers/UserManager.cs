@@ -1,4 +1,5 @@
 ﻿using UrlShortener.Server.Contexts;
+using UrlShortener.Server.Exceptions;
 using UrlShortener.Server.Models.Dto;
 using UrlShortener.Server.Models.Entities;
 
@@ -26,33 +27,30 @@ public class UserManager(UserContext userContext, SessionContext sessionContext)
         return this.CreateSession(createdUser.Id);
     }
 
-    public SessionDto LoginUser(UserLoginDto userDto)
+    public SessionDto AuthorizeUser(UserLoginDto userDto)
     {
         User user = _userContext.Users.FirstOrDefault(u => u.Username == userDto.Username)
-                    ?? throw new UnauthorizedAccessException(); // todo: custom exception
+                    ?? throw new AuthorizationFailedException();
 
         if (user.Password != userDto.Password)
-            throw new UnauthorizedAccessException(); // todo: custom exception
+            throw new AuthorizationFailedException();
 
         return this.CreateSession(user.Id);
     }
 
-    public bool LoginUser(SessionDto sessionDto)
+    public void AuthorizeSession(SessionDto sessionDto)
     {
         Session session = _sessionContext.Sessions.FirstOrDefault
-                (s => s.Token == sessionDto.Token && s.UserId == sessionDto.UserId);
-
-        if (session is null)
-            return false;
+                (s => s.Token == sessionDto.Token && s.UserId == sessionDto.UserId)
+                ?? throw new AuthorizationFailedException();
 
         session.LastAccess = DateTime.Now;
+
         _sessionContext.Sessions.Update(session);
         _sessionContext.SaveChanges();
-
-        return true;
     }
 
-    public SessionDto CreateSession(long userId)
+    private SessionDto CreateSession(long userId)
     {
         Session session = new()
         {
