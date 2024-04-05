@@ -77,7 +77,7 @@ export class AuthService {
     return new Promise<string>((resolve, reject) => {
       this.http
         .post<Session>(`${this.baseUrl}user/register`, {
-          role: 0,
+          role: 1,
           username: inputUsername,
           password: inputEmail,
           email: inputPassword,
