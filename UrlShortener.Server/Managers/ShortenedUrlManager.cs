@@ -20,16 +20,14 @@ public class ShortenedUrlManager(ShortenedUrlContext shortenedUrlContext)
 
     #region Methods
 
-    public IEnumerable<ShortenedUrlTableOutputDto> GetShortenedUrlList()
+    public IEnumerable<ShortenedUrlTableOutputDto> GetAllShortenedUrl()
     {
         return shortenedUrlContext.GetAll().Select(su => (ShortenedUrlTableOutputDto)su);
     }
 
     public ShortenedUrlInfoOutputDto GetShortenedUrlInfo(long id)
     {
-        ShortenedUrl shortenedUrl = shortenedUrlContext.ShortenedUrls.Include(su => su.Author)
-                                                       .FirstOrDefault(su => su.Id == id)
-                                    ?? throw new ShortenedUrlNotFound();
+        ShortenedUrl shortenedUrl = shortenedUrlContext.FindIncludedById(id) ?? throw new ShortenedUrlNotFound();
 
         return new()
         {
@@ -41,10 +39,9 @@ public class ShortenedUrlManager(ShortenedUrlContext shortenedUrlContext)
         };
     }
 
-    public string GetFullUrl(string shortUrl)
+    public string GetFullUrl(string code)
     {
-        ShortenedUrl shortenedUrl = shortenedUrlContext.ShortenedUrls.FirstOrDefault(su => su.Code == shortUrl)
-                                    ?? throw new ShortenedUrlNotFound();
+        ShortenedUrl shortenedUrl = shortenedUrlContext.FindByCode(code) ?? throw new ShortenedUrlNotFound();
 
         shortenedUrl.Clicks++;
         shortenedUrlContext.SaveChanges();
@@ -52,28 +49,28 @@ public class ShortenedUrlManager(ShortenedUrlContext shortenedUrlContext)
         return shortenedUrl.FullUrl;
     }
 
-    public void AddShortenedUrl(ShortenedUrlInputDto shortenedUrlDto)
+    public void AddShortenedUrl(ShortenedUrlInputDto inputDto)
     {
-        if (shortenedUrlContext.ShortenedUrls.Any(su => su.FullUrl == shortenedUrlDto.FullUrl))
+        if (shortenedUrlContext.HasByFullUrl(inputDto.FullUrl))
             throw new FullUrlAlreadyShortenedException();
 
         for (int i = 0; i <= _MaxAttempts; i++)
         {
-            string shortUrl = this.GenerateRandomCode();
+            string code = this.GenerateRandomCode();
 
-            if (shortenedUrlContext.HasShortUrl(shortUrl))
+            if (shortenedUrlContext.HasByCode(code))
                 continue;
 
             ShortenedUrl shortenedUrl = new()
             {
-                    FullUrl = shortenedUrlDto.FullUrl,
-                    Code = shortUrl,
-                    AuthorId = shortenedUrlDto.AuthorId,
+                    FullUrl = inputDto.FullUrl,
+                    Code = code,
+                    AuthorId = inputDto.AuthorId,
                     Clicks = 0,
                     CreatedAt = DateTime.Now
             };
 
-            shortenedUrlContext.ShortenedUrls.Add(shortenedUrl);
+            shortenedUrlContext.Add(shortenedUrl);
             shortenedUrlContext.SaveChanges();
 
             return;
@@ -84,8 +81,8 @@ public class ShortenedUrlManager(ShortenedUrlContext shortenedUrlContext)
 
     public void DeleteShortenedUrl(long id)
     {
-        shortenedUrlContext.ShortenedUrls.Remove
-                (shortenedUrlContext.ShortenedUrls.Find(id) ?? throw new ShortenedUrlNotFound());
+        shortenedUrlContext.Remove
+                (shortenedUrlContext.FindById(id) ?? throw new ShortenedUrlNotFound());
         shortenedUrlContext.SaveChanges();
     }
 

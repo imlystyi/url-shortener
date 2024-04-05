@@ -10,14 +10,14 @@ public class UserManager(UserContext userContext, SessionContext sessionContext)
 {
     public Roles CheckAccess(long id)
     {
-        User user = userContext.Find(id) ?? throw new NoRoleException();
+        User user = userContext.FindById(id) ?? throw new NoRoleException();
 
         return user.Role;
     }
 
     public SessionDto CreateUser(UserRegisterDto registerDto)
     {
-        if (userContext.HasUserByUsernameAndEmail(registerDto.Username, registerDto.Email))
+        if (userContext.HasByUsernameAndEmail(registerDto.Username, registerDto.Email))
             throw new UserAlreadyExistsException();
 
         User createdUser = userContext.Add((User)registerDto).Entity;
@@ -40,13 +40,12 @@ public class UserManager(UserContext userContext, SessionContext sessionContext)
     public void AuthorizeSession(SessionDto sessionDto)
     {
         Session session =
-                sessionContext.Sessions.FirstOrDefault(s => s.Token == sessionDto.Token &&
-                                                            s.UserId == sessionDto.UserId)
+                sessionContext.FindByTokenAndUserId(sessionDto.Token, sessionDto.UserId)
                 ?? throw new AuthorizationFailedException();
 
         session.LastAccess = DateTime.Now;
 
-        sessionContext.Sessions.Update(session);
+        sessionContext.Update(session);
         sessionContext.SaveChanges();
     }
 
@@ -59,7 +58,7 @@ public class UserManager(UserContext userContext, SessionContext sessionContext)
                 LastAccess = DateTime.Now
         };
 
-        sessionContext.Sessions.Add(session);
+        sessionContext.Add(session);
         sessionContext.SaveChanges();
 
         return (SessionDto)session;

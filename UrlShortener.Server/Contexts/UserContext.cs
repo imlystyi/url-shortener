@@ -7,8 +7,8 @@ public class UserContext(DbContextOptions<UserContext> options) : DbContext(opti
 {
     public DbSet<User> Users { get; set; }
 
-    public User Find(long id) => this.Users.Find(id);
+    public User FindById(long id) => this.Users.Find(id);
     public User FindByUsername(string username) => this.Users.FirstOrDefault(u => u.Username == username);
 
-    public bool HasUserByUsernameAndEmail(string username, string email) => this.Users.Any(u => u.Username == username || u.Email == email);
+    public bool HasByUsernameAndEmail(string username, string email) => this.Users.Any(u => u.Username == username || u.Email == email);
 }

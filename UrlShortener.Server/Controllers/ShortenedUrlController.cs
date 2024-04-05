@@ -41,7 +41,7 @@ public class ShortenedUrlController(ShortenedUrlContext shortenedUrlContext) : C
     {
         try
         {
-            return this.Ok(_shortenedUrlManager.GetShortenedUrlList());
+            return this.Ok(_shortenedUrlManager.GetAllShortenedUrl());
         }
         catch (Exception)
         {
@@ -56,7 +56,7 @@ public class ShortenedUrlController(ShortenedUrlContext shortenedUrlContext) : C
         {
             return this.Ok(_shortenedUrlManager.GetShortenedUrlInfo(id));
         }
-        catch (ShortenedUrlNotFound)
+        catch (ShortenedUrlNotFound e)
         {
             return this.NotFound();
         }
