@@ -12,12 +12,12 @@ public class ShortenedUrlController(ShortenedUrlContext shortenedUrlContext) : C
 {
     private readonly ShortenedUrlManager _shortenedUrlManager = new(shortenedUrlContext);
 
-    [HttpGet("{shortUrl}")]
-    public void RedirectFromShortenedUrl([FromRoute] string shortUrl)
+    [HttpGet("{code}")]
+    public void RedirectFromShortenedUrl([FromRoute] string code)
     {
         try
         {
-            string fullUrl = _shortenedUrlManager.GetFullUrl(shortUrl);
+            string fullUrl = _shortenedUrlManager.GetFullUrl(code);
             string prefix = !fullUrl.Contains("https://")
                     ? "https://"
                     : !fullUrl.Contains("http://")
@@ -67,11 +67,11 @@ public class ShortenedUrlController(ShortenedUrlContext shortenedUrlContext) : C
     }
 
     [HttpPost("api/url/add")]
-    public ActionResult Add([FromBody] ShortenedUrlInputDto shortenedUrlDto)
+    public ActionResult Add([FromBody] ShortenedUrlInputDto inputDto)
     {
         try
         {
-            _shortenedUrlManager.AddShortenedUrl(shortenedUrlDto);
+            _shortenedUrlManager.AddShortenedUrl(inputDto);
 
             return this.Ok();
         }

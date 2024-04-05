@@ -33,11 +33,11 @@ public class UserController(UserContext userContext, SessionContext sessionConte
     }
 
     [HttpPost("register")]
-    public ActionResult<SessionDto> Register([FromBody] UserRegisterDto userDto)
+    public ActionResult<SessionDto> Register([FromBody] UserRegisterDto registerDto)
     {
         try
         {
-            SessionDto sessionDto = _userManager.CreateUser(userDto);
+            SessionDto sessionDto = _userManager.CreateUser(registerDto);
 
             return this.Ok(sessionDto);
         }
@@ -52,11 +52,11 @@ public class UserController(UserContext userContext, SessionContext sessionConte
     }
 
     [HttpPost("login")]
-    public ActionResult<SessionDto> LoginByUserIdentities([FromBody] UserLoginDto userDto)
+    public ActionResult<SessionDto> LoginByUserIdentities([FromBody] UserLoginDto loginDto)
     {
         try
         {
-            SessionDto sessionDto = _userManager.AuthorizeUser(userDto);
+            SessionDto sessionDto = _userManager.AuthorizeUser(loginDto);
 
             return this.Ok(sessionDto);
         }
